@@ -1,6 +1,3 @@
-import User
-
-
 class Post:
 
     def __init__(self, message, geotag, photo):
@@ -44,7 +41,3 @@ class Post:
     def remove_like(self, liked_mouse):
         if liked_mouse in self.__liked:
             self.liked.remove(liked_mouse)
-
-
-if __name__ == '__main__':
-    pass

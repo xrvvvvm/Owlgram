@@ -55,8 +55,5 @@ class OnViberDecorator(BaseDecorator):
         return self._notify.send() + '\nThe notification was sent to Viber'
 
 
-if __name__ == '__main__':
-    pass
-
 
 
