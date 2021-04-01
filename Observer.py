@@ -12,12 +12,12 @@ class Subject(ABC):
         pass
 
     @abstractmethod
-    def notify(self):
+    def notify(self, post):
         pass
 
 
 class Observer(ABC):
 
     @abstractmethod
-    def update(self, subject):
+    def update(self, subject, post):
         pass

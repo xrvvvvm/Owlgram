@@ -11,7 +11,7 @@ class Notifier(ABC):
 class ConcreteNotifier(Notifier):
 
     def send(self):
-        return 'Notifier: '
+        return 'Уведомление: '
 
 
 class BaseDecorator(Notifier):
@@ -28,31 +28,31 @@ class BaseDecorator(Notifier):
 class InsideNetworkDecorator(BaseDecorator):
 
     def send(self):
-        return self._notify.send() + 'The notification was sent to inside network'
+        return self._notify.send() + '\nОтправлено внутри сети'
 
 
 class OnEmailDecorator(BaseDecorator):
 
     def send(self):
-        return self._notify.send() + 'The notification was sent to email'
+        return self._notify.send() + '\nОтправлено по email'
 
 
 class OnTelegramDecorator(BaseDecorator):
 
     def send(self):
-        return self._notify.send() + '\nThe notification was sent to Telegram'
+        return self._notify.send() + '\nОтправлено в telegram'
 
 
 class OnWhatsAppDecorator(BaseDecorator):
 
     def send(self):
-        return self._notify.send() + '\nThe notification was sent to WhatsApp'
+        return self._notify.send() + '\nОтправлено в whats app'
 
 
 class OnViberDecorator(BaseDecorator):
 
     def send(self):
-        return self._notify.send() + '\nThe notification was sent to Viber'
+        return self._notify.send() + '\nОтправлено в viber'
 
 
 
