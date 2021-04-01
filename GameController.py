@@ -35,6 +35,9 @@ mouse_timer = PerpetualTimer(1, mouse_timer_tick)
 
 
 def intersection_lists(l1, l2):
+    """
+    Возвращает пересечение списков l1 & l2
+    """
     result = []
     for i in l1:
         for j in l2:
@@ -44,12 +47,15 @@ def intersection_lists(l1, l2):
 
 
 def subtract_lists(l1, l2):
+    """
+    Возвращает разность списков l1 - l2
+    """
     result = []
     for i in l1:
         no_contains = True
         for j in l2:
-            if l1 == l2:
-                contains = False
+            if i == j:
+                no_contains = False
                 break
         if no_contains:
             result.append(i)
@@ -230,6 +236,9 @@ def print_notifications_methods(mouse):
 
 
 def select_notification_methods(mouse):
+    """
+    Устанавлевает способы уведомления
+    """
     while 1:
         print_notifications_methods(mouse)
         choice = input()
