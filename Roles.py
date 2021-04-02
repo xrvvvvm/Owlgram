@@ -11,8 +11,8 @@ class Owl(Subject):
         self.posts = []
         self.observers = []
         self.dead = False
-        self.happiness_lvl = 100
-        self.satiety_lvl = 50
+        self.happiness_lvl = 50
+        self.satiety_lvl = 100
 
     @property
     def dead(self):
