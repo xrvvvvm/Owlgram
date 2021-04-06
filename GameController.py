@@ -101,7 +101,7 @@ def print_mouse_subscriptions(mouse):
     """
     i = 1
     for owl in mouse.subscriptions:
-        print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i}0" - отписаться; "{i}1" - посмотреть посты')
+        print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - отписаться; "{i} 1" - посмотреть посты')
         i += 1
 
 
@@ -112,10 +112,10 @@ def show_subscriptions(mouse):
     print_mouse_subscriptions(mouse)
     while 1:
         print('Введите действие напротив совы или "q", чтобы вернуться')
-        choice = input()
+        choice = input().split(' ')
         if choice == 'q':
             enter_mouse(mouse)
-        # не будет работать, если сов будет больше 9
+        # не будет работать, если сов будет больше 9 ???
         if len(choice) < 2:
             print('Введите корректную команду')
             continue
