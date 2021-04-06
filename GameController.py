@@ -113,7 +113,7 @@ def show_subscriptions(mouse):
     while 1:
         print('Введите действие напротив совы или "q", чтобы вернуться')
         choice = input().split(' ')
-        if choice == 'q':
+        if choice[0] == 'q':
             enter_mouse(mouse)
         # не будет работать, если сов будет больше 9 ???
         if len(choice) < 2:
@@ -144,13 +144,13 @@ def show_unliked_posts(mouse):
             try:
                 contain = post.liked.index(mouse)
             except ValueError:
-                print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}; "{i}0" - лайкнуть')
+                print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}; "{i} 0" - лайкнуть')
                 posts.append(post)
                 i += 1
     while 1:
         print('Введите действие напротив поста или "q", чтобы вернуться')
-        choice = input()
-        if choice == 'q':
+        choice = input().split(' ')
+        if choice[0] == 'q':
             enter_mouse(mouse)
         if len(choice) < 2:
             print('Введите корректную команду')
@@ -181,14 +181,14 @@ def show_other_owls(mouse):
         try:
             contain = owl.observers.index(mouse)
         except ValueError:
-            print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i}0" - подписаться; "{i}1" - посмотреть посты')
+            print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - подписаться; "{i} 1" - посмотреть посты')
             no_subs_owls.append(owl)
             i += 1
     while 1:
         print('Введите действие напротив совы или "q", чтобы вернуться')
         # print(f'*** i = {i}')
-        choice = input()
-        if choice == 'q':
+        choice = input().split()
+        if choice[0] == 'q':
             enter_mouse(mouse)
         if len(choice) < 2:
             print('Введите корректную команду')
