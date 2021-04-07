@@ -24,7 +24,7 @@ def owl_timer_tick():
     for owl in owls:
         owl.happiness_down()
         owl.satiety_down()
-        print(f'{owl.name} \t {owl.happiness_lvl} \t {owl.satiety_lvl}')
+        # print(f'{owl.name} \t {owl.happiness_lvl} \t {owl.satiety_lvl}')
         if owl.dead:
             owls.remove(owl)
             print(f'Сова {owl.name} мертва')
@@ -130,38 +130,33 @@ def show_subscriptions(mouse):
         else:
             print('Введите корректную команду')
             continue
+    return
 
 
 def show_unliked_posts(mouse):
     """
     Показывает посты, которые мышь не лайкнула
     """
-    i = 0
-    posts = []
-    for owl in mouse.subscriptions:
-        print(f'{owl.name}:')
-        for post in owl.posts:
-            try:
-                contain = post.liked.index(mouse)
-            except ValueError:
-                print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}; "{i} 0" - лайкнуть')
-                posts.append(post)
-                i += 1
     while 1:
+        i = 0
+        posts = []
+        for owl in mouse.subscriptions:
+            print(f'{owl.name}:')
+            for post in owl.posts:
+                if mouse not in post.liked:
+                    print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}; "{i} 0" - лайкнуть')
+                    posts.append(post)
+                    i += 1
         print('Введите действие напротив поста или "q", чтобы вернуться')
         choice = input().split(' ')
         if choice[0] == 'q':
             enter_mouse(mouse)
-        if len(choice) < 2:
+        if len(choice) != 2 or int(choice[0]) > i:
             print('Введите корректную команду')
             continue
-        if 0 <= int(choice[0]) <= i:
-            if int(choice[1]) == 0:
-                posts[i - 1].like(mouse)
-                print(f'Вы лайкнули пост {i - 1}')
-        else:
-            print('Введите корректную команду')
-            continue
+        if int(choice[1]) == 0:
+            posts[int(choice[0])].like(mouse)
+            print(f'Вы лайкнули пост {int(choice[0])}')
 
 
 def show_mouse_info(mouse):
@@ -175,35 +170,27 @@ def show_other_owls(mouse):
     """
     Показывает сов, на которых мышь не подписана
     """
-    i = 0
-    no_subs_owls = []
-    for owl in owls:
-        try:
-            contain = owl.observers.index(mouse)
-        except ValueError:
-            print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - подписаться; "{i} 1" - посмотреть посты')
-            no_subs_owls.append(owl)
-            i += 1
     while 1:
+        i = 0
+        no_subs_owls = []
+        for owl in owls:
+            if mouse not in owl.observers:
+                print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - подписаться; "{i} 1" - посмотреть посты')
+                no_subs_owls.append(owl)
+                i += 1
         print('Введите действие напротив совы или "q", чтобы вернуться')
-        # print(f'*** i = {i}')
         choice = input().split()
         if choice[0] == 'q':
             enter_mouse(mouse)
-        if len(choice) < 2:
-            print('Введите корректную команду')
-            continue
         owl_idx = int(choice[0])
-        if 0 <= owl_idx <= i:
-            # print(f'*** int(choice[0]) = {owl_idx}')
-            if int(choice[1]) == 0:
-                mouse.subscribe(no_subs_owls[owl_idx])
-                print(f'Вы подписались на {no_subs_owls[owl_idx].name}')
-            elif int(choice[1]) == 1:
-                show_owl_posts(no_subs_owls[owl_idx])
-        else:
+        if len(choice) != 2 or owl_idx > i:
             print('Введите корректную команду')
             continue
+        if int(choice[1]) == 0:
+            mouse.subscribe(no_subs_owls[owl_idx])
+            print(f'Вы подписались на {no_subs_owls[owl_idx].name}')
+        elif int(choice[1]) == 1:
+            show_owl_posts(no_subs_owls[owl_idx])
 
 
 def print_notifications_methods(mouse):
@@ -299,10 +286,8 @@ def check_likes(owl):
     """
     Проверяет, кто не лайкнул посты, и съедает мышь, которая не лайкнула n последних постов
     """
-    # posts = owl.posts.reverse()
     posts = list(reversed(owl.posts))
     prev_unliked_mice = owl.observers
-    # print(posts)
     n = 3 if len(posts) >= 3 else len(posts)
     for i in range(0, n):
         # находит мышей, которые не лайкнули текущий пост
@@ -327,7 +312,7 @@ def enter_owl(owl):
     """
     Вход за сову
     """
-    while 1:
+    while True:
         print_owl_actions()
         choice = input()
         if choice == '1':
