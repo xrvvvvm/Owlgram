@@ -402,14 +402,15 @@ def main_actions():
     """
     Выводит действия неавторизированного пользователя
     """
-    print_main_actions()
-    choice = input()
-    if choice == '1':
-        register()
-    elif choice == '2':
-        enter()
-    else:
-        print('Введите крректную команду')
+    while True:
+        print_main_actions()
+        choice = input()
+        if choice == '1':
+            register()
+        elif choice == '2':
+            enter()
+        else:
+            print('Введите крректную команду')
 
 
 def start():
