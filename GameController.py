@@ -115,18 +115,25 @@ def show_subscriptions(mouse):
         choice = input().split(' ')
         if choice[0] == 'q':
             enter_mouse(mouse)
-        # не будет работать, если сов будет больше 9 ???
-        if len(choice) < 2:
+        if len(choice) != 2:
             print('Введите корректную команду')
             continue
-        owl_idx = int(choice[0])
+        try:
+            owl_idx = int(choice[0])
+            action = int(choice[1])
+        except ValueError:
+            print('Введите корректную команду')
+            continue
         if 0 <= owl_idx < len(mouse.subscriptions):
-            if int(choice[1]) == 0:
+            if action == 0:
                 mouse.unsubscribe(mouse.subscriptions[owl_idx])
                 print(f'Вы отписались от {mouse.subscriptions[owl_idx].name}')
                 print_mouse_subscriptions(mouse)
-            elif int(choice[1]) == 1:
+            elif action == 1:
                 show_owl_posts(mouse.subscriptions[owl_idx])
+            else:
+                print('Введите корректную команду')
+                continue
         else:
             print('Введите корректную команду')
             continue
@@ -151,12 +158,18 @@ def show_unliked_posts(mouse):
         choice = input().split(' ')
         if choice[0] == 'q':
             enter_mouse(mouse)
-        if len(choice) != 2 or int(choice[0]) > i:
+        try:
+            post_idx = int(choice[0])
+            action = int(choice[1])
+        except ValueError:
             print('Введите корректную команду')
             continue
-        if int(choice[1]) == 0:
-            posts[int(choice[0])].like(mouse)
-            print(f'Вы лайкнули пост {int(choice[0])}')
+        if len(choice) != 2 or post_idx > i:
+            print('Введите корректную команду')
+            continue
+        if action == 0:
+            posts[post_idx].like(mouse)
+            print(f'Вы лайкнули пост {post_idx}')
 
 
 def show_mouse_info(mouse):
@@ -182,14 +195,19 @@ def show_other_owls(mouse):
         choice = input().split()
         if choice[0] == 'q':
             enter_mouse(mouse)
-        owl_idx = int(choice[0])
+        try:
+            owl_idx = int(choice[0])
+            action = int(choice[1])
+        except ValueError:
+            print('Введите корректную команду')
+            continue
         if len(choice) != 2 or owl_idx > i:
             print('Введите корректную команду')
             continue
-        if int(choice[1]) == 0:
+        if action == 0:
             mouse.subscribe(no_subs_owls[owl_idx])
             print(f'Вы подписались на {no_subs_owls[owl_idx].name}')
-        elif int(choice[1]) == 1:
+        elif action == 1:
             show_owl_posts(no_subs_owls[owl_idx])
 
 
