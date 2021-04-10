@@ -1,4 +1,5 @@
 import Roles
+from Mouse import Mouse
 import Post
 from PerpetualTimer import PerpetualTimer
 import random
@@ -178,7 +179,7 @@ def create_new_user(name, age, avatar, password):
     if rand > 0.7:
         return Roles.Owl(name, age, avatar, password)
     else:
-        return Roles.Mouse(name, age, avatar, password)
+        return Mouse(name, age, avatar, password)
 
 
 def register():
@@ -194,7 +195,7 @@ def register():
     print('Введите пароль: ', end=' ')
     password = getpass.getpass('')
     new_user = create_new_user(name, age, avatar, password)
-    if isinstance(new_user, Roles.Mouse):
+    if isinstance(new_user, Mouse):
         mice.append(new_user)
         # enter_mouse(new_user)
         new_user.enter_mouse()
