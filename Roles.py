@@ -237,9 +237,10 @@ class Mouse(Observer):
         """
         Показывает сов, на которых мышь не подписана
         """
+        no_subs_owls = []
         while 1:
             i = 0
-            no_subs_owls = []
+            # no_subs_owls = []
             for owl in GameController.owls:
                 if self not in owl.observers:
                     print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - подписаться; "{i} 1" - посмотреть посты')
