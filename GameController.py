@@ -69,14 +69,6 @@ def print_main_actions():
     print('1 - Зарегистрироваться', '2 - Войти', sep='\n')
 
 
-def print_mouse_actions():
-    """
-    Выводит действия для мыши
-    """
-    print('1 - Подписки', '2 - Последние посты', '3 - Моё время жизни',
-          '4 - Просмотр остальных сов', '5 - Способ получения уведомлений', '6 - Выйти', sep='\n')
-
-
 def print_owl_actions():
     """
     Выводит действия для совы
@@ -93,197 +85,6 @@ def show_owl_posts(owl):
     for post in owl.posts:
         print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}')
         i += 1
-
-
-def print_mouse_subscriptions(mouse):
-    """
-    Выводит подписки мыши
-    """
-    i = 1
-    for owl in mouse.subscriptions:
-        print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - отписаться; "{i} 1" - посмотреть посты')
-        i += 1
-
-
-def show_subscriptions(mouse):
-    """
-    Показывает сов, на которых подписана мышь
-    """
-    print_mouse_subscriptions(mouse)
-    while 1:
-        print('Введите действие напротив совы или "q", чтобы вернуться')
-        choice = input().split(' ')
-        if choice[0] == 'q':
-            enter_mouse(mouse)
-        if len(choice) != 2:
-            print('Введите корректную команду')
-            continue
-        try:
-            owl_idx = int(choice[0])
-            action = int(choice[1])
-        except ValueError:
-            print('Введите корректную команду')
-            continue
-        if 0 <= owl_idx < len(mouse.subscriptions):
-            if action == 0:
-                mouse.unsubscribe(mouse.subscriptions[owl_idx])
-                print(f'Вы отписались от {mouse.subscriptions[owl_idx].name}')
-                print_mouse_subscriptions(mouse)
-            elif action == 1:
-                show_owl_posts(mouse.subscriptions[owl_idx])
-            else:
-                print('Введите корректную команду')
-                continue
-        else:
-            print('Введите корректную команду')
-            continue
-    return
-
-
-def show_unliked_posts(mouse):
-    """
-    Показывает посты, которые мышь не лайкнула
-    """
-    while 1:
-        i = 0
-        posts = []
-        for owl in mouse.subscriptions:
-            print(f'{owl.name}:')
-            for post in owl.posts:
-                if mouse not in post.liked:
-                    print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}; "{i} 0" - лайкнуть')
-                    posts.append(post)
-                    i += 1
-        print('Введите действие напротив поста или "q", чтобы вернуться')
-        choice = input().split(' ')
-        if choice[0] == 'q':
-            enter_mouse(mouse)
-        try:
-            post_idx = int(choice[0])
-            action = int(choice[1])
-        except ValueError:
-            print('Введите корректную команду')
-            continue
-        if len(choice) != 2 or post_idx > i:
-            print('Введите корректную команду')
-            continue
-        if action == 0:
-            posts[post_idx].like(mouse)
-            print(f'Вы лайкнули пост {post_idx}')
-
-
-def show_mouse_info(mouse):
-    """
-    Показывает время жизни мыши
-    """
-    print('Время жизни:', mouse.life_time)
-
-
-def show_other_owls(mouse):
-    """
-    Показывает сов, на которых мышь не подписана
-    """
-    while 1:
-        i = 0
-        no_subs_owls = []
-        for owl in owls:
-            if mouse not in owl.observers:
-                print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - подписаться; "{i} 1" - посмотреть посты')
-                no_subs_owls.append(owl)
-                i += 1
-        print('Введите действие напротив совы или "q", чтобы вернуться')
-        choice = input().split()
-        if choice[0] == 'q':
-            enter_mouse(mouse)
-        try:
-            owl_idx = int(choice[0])
-            action = int(choice[1])
-        except ValueError:
-            print('Введите корректную команду')
-            continue
-        if len(choice) != 2 or owl_idx > i:
-            print('Введите корректную команду')
-            continue
-        if action == 0:
-            mouse.subscribe(no_subs_owls[owl_idx])
-            print(f'Вы подписались на {no_subs_owls[owl_idx].name}')
-        elif action == 1:
-            show_owl_posts(no_subs_owls[owl_idx])
-
-
-def print_notifications_methods(mouse):
-    if mouse.notify_inside_network:
-        print('Уведомления внутри сети подключены')
-    else:
-        print('Уведомления внутри сети отключены. "1" - подключить')
-
-    if mouse.notify_email:
-        print('Уведомления по email подключены')
-    else:
-        print('Уведомления по email отключены. "2" - подключить')
-
-    if mouse.notify_telegram:
-        print('Уведомления в telegram подключены')
-    else:
-        print('Уведомления в telegram отключены. "3" - подключить')
-
-    if mouse.notify_whats_app:
-        print('Уведомления в whats app подключены')
-    else:
-        print('Уведомления в whats app отключены. "4" - подключить')
-
-    if mouse.notify_viber:
-        print('Уведомления в viber подключены')
-    else:
-        print('Уведомления в viber отключены. "5" - подключить')
-
-    print('"q" - назад')
-
-
-def select_notification_methods(mouse):
-    """
-    Устанавлевает способы уведомления
-    """
-    while 1:
-        print_notifications_methods(mouse)
-        choice = input()
-        if choice == '1':
-            mouse.notification_inside_network_on()
-        elif choice == '2':
-            mouse.notification_email_on()
-        elif choice == '3':
-            mouse.notification_telegram_on()
-        elif choice == '4':
-            mouse.notification_whats_app_on()
-        elif choice == '5':
-            mouse.notification_viber_on()
-        elif choice == 'q':
-            enter_mouse(mouse)
-        else:
-            print('Введите крректную команду')
-
-
-def enter_mouse(mouse):
-    """
-    Вход за мышь
-    """
-    while 1:
-        print_mouse_actions()
-        choice = input()
-        if choice == '1':
-            show_subscriptions(mouse)
-        elif choice == '2':
-            show_unliked_posts(mouse)
-        elif choice == '3':
-            show_mouse_info(mouse)
-        elif choice == '4':
-            show_other_owls(mouse)
-        elif choice == '5':
-            select_notification_methods(mouse)
-        elif choice == '6':
-            main_actions()
-        else:
-            print('Введите крректную команду')
 
 
 def send_post(owl):
@@ -362,7 +163,7 @@ def enter():
     for i in mice:
         if i.name == name:
             if i.password == password:
-                enter_mouse(i)
+                i.enter_mouse()
             else:
                 print('Неправильный пароль')
     print('Такого пользователя не существует')
@@ -395,7 +196,8 @@ def register():
     new_user = create_new_user(name, age, avatar, password)
     if isinstance(new_user, Roles.Mouse):
         mice.append(new_user)
-        enter_mouse(new_user)
+        # enter_mouse(new_user)
+        new_user.enter_mouse()
     else:
         owls.append(new_user)
         enter_owl(new_user)
@@ -423,4 +225,3 @@ def start():
     mouse_timer.start()
     owl_timer.start()
     main_actions()
-
