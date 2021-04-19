@@ -1,6 +1,7 @@
 from Observer import Observer
 import Decorator
 import GameController
+from Owl import Owl
 
 
 class Mouse(Observer):
@@ -89,7 +90,7 @@ class Mouse(Observer):
         """
         Показывает сов, на которых подписана мышь
         """
-
+        self.print_mouse_subscriptions()
         while 1:
             print('Введите действие напротив совы или "q", чтобы вернуться')
             choice = input().split(' ')
@@ -104,13 +105,13 @@ class Mouse(Observer):
             except ValueError:
                 print('Введите корректную команду')
                 continue
-            if 0 <= owl_idx < len(self.subscriptions):
+            if 0 <= owl_idx <= len(self.subscriptions):
                 if action == 0:
                     self.unsubscribe(self.subscriptions[owl_idx])
                     print(f'Вы отписались от {self.subscriptions[owl_idx].name}')
                     self.print_mouse_subscriptions()
                 elif action == 1:
-                    GameController.show_owl_posts(self.subscriptions[owl_idx])
+                    Owl.show_owl_posts(self.subscriptions[owl_idx])
                 else:
                     print('Введите корректную команду')
                     continue
@@ -186,7 +187,8 @@ class Mouse(Observer):
                 self.subscribe(no_subs_owls[owl_idx])
                 print(f'Вы подписались на {no_subs_owls[owl_idx].name}')
             elif action == 1:
-                GameController.show_owl_posts(no_subs_owls[owl_idx])
+                # вынести данную функцию в класс Post
+                Owl.show_owl_posts(no_subs_owls[owl_idx])
 
     def print_notifications_methods(self):
         if self.notify_inside_network:

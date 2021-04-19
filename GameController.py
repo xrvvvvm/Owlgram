@@ -1,6 +1,5 @@
-import Roles
+from Owl import Owl
 from Mouse import Mouse
-import Post
 from PerpetualTimer import PerpetualTimer
 import random
 import getpass
@@ -70,81 +69,81 @@ def print_main_actions():
     print('1 - Зарегистрироваться', '2 - Войти', sep='\n')
 
 
-def print_owl_actions():
-    """
-    Выводит действия для совы
-    """
-    print('1 - Выложить пост', '2 - Проверить лайки подписчиков',
-          '3 - Мои характеристики', '4 - Выйти', sep='\n')
-
-
-def show_owl_posts(owl):
-    """
-    Показывает посты совы
-    """
-    i = 0
-    for post in owl.posts:
-        print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}')
-        i += 1
-
-
-def send_post(owl):
-    """
-    Отправляет пост
-    """
-    print('Введите подпись: ', end=' ')
-    message = input()
-    print('Загрузите фото: ', end=' ')
-    photo = input()
-    print('Поставьте геометку: ', end=' ')
-    geotag = input()
-    post = Post.Post(message, geotag, photo)
-    owl.post(post)
-
-
-def check_likes(owl):
-    """
-    Проверяет, кто не лайкнул посты, и съедает мышь, которая не лайкнула n последних постов
-    """
-    posts = list(reversed(owl.posts))
-    prev_unliked_mice = owl.observers
-    n = 3 if len(posts) >= 3 else len(posts)
-    for i in range(0, n):
-        # находит мышей, которые не лайкнули текущий пост
-        unliked_mice = subtract_lists(owl.observers, posts[i].liked)
-        # сохраняет мышей, которые не лайкнули предыдущий пост
-        prev_unliked_mice = intersection_lists(prev_unliked_mice, unliked_mice)
-    for mouse in prev_unliked_mice:
-        owl.eat_mouse(mouse)
-        mice.remove(mouse)
-    print(f'Съедено {len(prev_unliked_mice)} мышей')
-
-
-def show_owl_info(owl):
-    """
-    Показывает уровень счастья и сытости совы
-    """
-    print('Уровень счастья:', owl.happiness_lvl)
-    print('Уровень сытости:', owl.satiety_lvl)
-
-
-def enter_owl(owl):
-    """
-    Вход за сову
-    """
-    while True:
-        print_owl_actions()
-        choice = input()
-        if choice == '1':
-            send_post(owl)
-        elif choice == '2':
-            check_likes(owl)
-        elif choice == '3':
-            show_owl_info(owl)
-        elif choice == '4':
-            main_actions()
-        else:
-            print('Введите крректную команду')
+# def print_owl_actions():
+#     """
+#     Выводит действия для совы
+#     """
+#     print('1 - Выложить пост', '2 - Проверить лайки подписчиков',
+#           '3 - Мои характеристики', '4 - Выйти', sep='\n')
+#
+#
+# def show_owl_posts(owl):
+#     """
+#     Показывает посты совы
+#     """
+#     i = 0
+#     for post in owl.posts:
+#         print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}')
+#         i += 1
+#
+#
+# def send_post(owl):
+#     """
+#     Отправляет пост
+#     """
+#     print('Введите подпись: ', end=' ')
+#     message = input()
+#     print('Загрузите фото: ', end=' ')
+#     photo = input()
+#     print('Поставьте геометку: ', end=' ')
+#     geotag = input()
+#     post = Post.Post(message, geotag, photo)
+#     owl.post(post)
+#
+#
+# def check_likes(owl):
+#     """
+#     Проверяет, кто не лайкнул посты, и съедает мышь, которая не лайкнула n последних постов
+#     """
+#     posts = list(reversed(owl.posts))
+#     prev_unliked_mice = owl.observers
+#     n = 3 if len(posts) >= 3 else len(posts)
+#     for i in range(0, n):
+#         # находит мышей, которые не лайкнули текущий пост
+#         unliked_mice = subtract_lists(owl.observers, posts[i].liked)
+#         # сохраняет мышей, которые не лайкнули предыдущий пост
+#         prev_unliked_mice = intersection_lists(prev_unliked_mice, unliked_mice)
+#     for mouse in prev_unliked_mice:
+#         owl.eat_mouse(mouse)
+#         mice.remove(mouse)
+#     print(f'Съедено {len(prev_unliked_mice)} мышей')
+#
+#
+# def show_owl_info(owl):
+#     """
+#     Показывает уровень счастья и сытости совы
+#     """
+#     print('Уровень счастья:', owl.happiness_lvl)
+#     print('Уровень сытости:', owl.satiety_lvl)
+#
+#
+# def enter_owl(owl):
+#     """
+#     Вход за сову
+#     """
+#     while True:
+#         print_owl_actions()
+#         choice = input()
+#         if choice == '1':
+#             send_post(owl)
+#         elif choice == '2':
+#             check_likes(owl)
+#         elif choice == '3':
+#             show_owl_info(owl)
+#         elif choice == '4':
+#             main_actions()
+#         else:
+#             print('Введите крректную команду')
 
 
 def enter():
@@ -158,7 +157,7 @@ def enter():
     for i in owls:
         if i.name == name:
             if i.password == password:
-                enter_owl(i)
+                i.enter_owl()
             else:
                 print('Неправильный пароль')
     for i in mice:
@@ -177,7 +176,7 @@ def create_new_user(name, age, avatar, password):
     """
     rand = random.random()
     if rand > 0.7:
-        return Roles.Owl(name, age, avatar, password)
+        return Owl(name, age, avatar, password)
     else:
         return Mouse(name, age, avatar, password)
 
@@ -201,7 +200,7 @@ def register():
         new_user.enter_mouse()
     else:
         owls.append(new_user)
-        enter_owl(new_user)
+        Owl.enter_owl(new_user)
 
 
 def main_actions():
