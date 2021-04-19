@@ -140,13 +140,10 @@ class Owl(Subject):
         while True:
             self.print_owl_actions()
             choice = input()
-            if choice == '1':
-                self.send_post()
-            elif choice == '2':
-                self.check_likes()
-            elif choice == '3':
-                self.show_owl_info()
-            elif choice == '4':
-                GameController.main_actions()
-            else:
-                print('Введите крректную команду')
+            number_act = {
+                '1': self.send_post,
+                '2': self.check_likes,
+                '3': self.show_owl_info,
+                '4': GameController.main_actions
+            }
+            number_act[choice]() if choice in number_act else print('Введите крректную команду')
