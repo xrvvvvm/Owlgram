@@ -172,9 +172,9 @@ class Mouse(Observer):
                     i += 1
             print('Введите действие напротив совы или "q", чтобы вернуться')
             choice = input().split()
-            if choice[0] == 'q':
-                self.enter_mouse()
             try:
+                if choice[0] == 'q':
+                    self.enter_mouse()
                 owl_idx = int(choice[0])
                 action = int(choice[1])
             except ValueError or IndexError:
