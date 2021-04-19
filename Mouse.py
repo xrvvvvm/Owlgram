@@ -69,7 +69,7 @@ class Mouse(Observer):
         self.__notifier = Decorator.OnWhatsAppDecorator(self.__notifier)
         self.notify_whats_app = True
 
-    # @staticmethod
+    @staticmethod
     def print_mouse_actions(self):
         """
         Выводит действия для мыши
@@ -175,11 +175,13 @@ class Mouse(Observer):
             try:
                 if choice[0] == 'q':
                     self.enter_mouse()
+
                 owl_idx = int(choice[0])
                 action = int(choice[1])
-            except ValueError or IndexError:
+            except (ValueError, IndexError):
                 print('Введите корректную команду')
                 continue
+
             if len(choice) != 2 or owl_idx > i:
                 print('Введите корректную команду')
                 continue

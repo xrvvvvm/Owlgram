@@ -89,6 +89,7 @@ class Owl(Subject):
             print(f'{i} \t {post.message} \t {post.photo} \t {post.geotag}')
             i += 1
 
+    @staticmethod
     def print_owl_actions(self):
         """
         Выводит действия для совы
