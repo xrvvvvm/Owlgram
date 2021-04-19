@@ -119,7 +119,6 @@ def register():
     new_user = create_new_user(name, age, avatar, password)
     if isinstance(new_user, Mouse):
         mice.append(new_user)
-        # enter_mouse(new_user)
         new_user.enter_mouse()
     else:
         owls.append(new_user)
@@ -133,12 +132,11 @@ def main_actions():
     while True:
         print_main_actions()
         choice = input()
-        if choice == '1':
-            register()
-        elif choice == '2':
-            enter()
-        else:
-            print('Введите крректную команду')
+        number_act = {
+            '1': register,
+            '2': enter
+        }
+        number_act[choice]() if choice in number_act else print('Введите корректную команду')
 
 
 def start():
