@@ -81,7 +81,7 @@ class Mouse(Observer):
         """
         Выводит подписки мыши
         """
-        i = 1
+        i = 0
         for owl in self.subscriptions:
             print(f'{i} \t {owl.name} \t {owl.avatar}; \t \t "{i} 0" - отписаться; "{i} 1" - посмотреть посты')
             i += 1
@@ -105,7 +105,7 @@ class Mouse(Observer):
             except ValueError:
                 print('Введите корректную команду')
                 continue
-            if 0 <= owl_idx <= len(self.subscriptions):
+            if 0 <= owl_idx < len(self.subscriptions):
                 if action == 0:
                     self.unsubscribe(self.subscriptions[owl_idx])
                     print(f'Вы отписались от {self.subscriptions[owl_idx].name}')
