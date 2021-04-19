@@ -83,13 +83,16 @@ def enter():
                 i.enter_owl()
             else:
                 print('Неправильный пароль')
+        else:
+            print('Такого пользователя не существует')
     for i in mice:
         if i.name == name:
             if i.password == password:
                 i.enter_mouse()
             else:
                 print('Неправильный пароль')
-    print('Такого пользователя не существует')
+        else:
+            print('Такого пользователя не существует')
     main_actions()
 
 
