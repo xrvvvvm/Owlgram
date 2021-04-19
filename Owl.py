@@ -90,7 +90,7 @@ class Owl(Subject):
             i += 1
 
     @staticmethod
-    def print_owl_actions(self):
+    def print_owl_actions():
         """
         Выводит действия для совы
         """

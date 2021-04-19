@@ -70,7 +70,7 @@ class Mouse(Observer):
         self.notify_whats_app = True
 
     @staticmethod
-    def print_mouse_actions(self):
+    def print_mouse_actions():
         """
         Выводит действия для мыши
         """
